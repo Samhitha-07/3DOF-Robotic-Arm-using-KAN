@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>3DOF RRR Robotic Manipulator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="3DOF RRR Robotic Manipulator using Kolmogorov Arnold Network">
+  <meta name="keywords" content="robotics, 3DOF, RRR, Kolmogorov Arnold Network, KAN, simulation">
+  <meta name="author" content="Your Name">
+
+  <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    body {
+      background-color: #ffffff;
+    }
+    .unslate_co--site-nav {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+      padding-top: 20px;
+    }
+    .unslate_co--site-nav .site-nav-ul li a {
+      color: white; /* Change text color to white */
+    }
+    .site-logo-wrapper a {
+      color: white;
+    }
+    .site-logo-wrapper img {
+      margin: 0 15px 0 0;
+    }
+    #theory-section {
+      color: black; /* Ensure text color is black */
+      padding-top: 120px; /* Add top padding to avoid overlap with navbar */
+    }
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question {
+      margin-bottom: 20px;
+      background-color: transparent; /* Remove yellow background color */
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+    /* Style for the score container */
+    #score-container {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f8f9fa; /* Light gray background color */
+      border-radius: 5px;
+      text-align: center;
+    }
+    .unslate_co--site-nav {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+      padding-top: 20px;
+    }
+    .unslate_co--site-nav .site-nav-ul li a {
+      color: white; /* Change text color to white */
+    }
+    .site-logo-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .site-logo-wrapper a {
+      color: white;
+    }
+    .site-logo-wrapper img {
+      width: 50px;
+      margin-right: 10px;
+      border-radius: 20%;
+    }
+    #downloadButton {
+      background-color: black;
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 10px 20px; /* Adjust padding as needed */
+    }
+  </style>
+  
+</head>
+<body>
+  <nav class="unslate_co--site-nav site-nav-target" >
+    <div class="container">
+        <div class="site-logo-wrapper" style="display: flex; align-items: center; position: absolute; left: 0; top: 0;">
+            <img src="./Files/images/alogo.png" alt="Amrita Logo" style="width: 50px; margin-right: 10px; border-radius: 20%;">
+            <a href="index.html" class="unslate_co--site-logo" style="padding-top: 5px;">Group 9<span>.</span></a>
+            <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block" style="padding-left: 30px;">
+              <li><a href="./index.html" class="nav-link" >Home</a></li>
+              <li><a href="./Theory.html" class="nav-link">Theory</a></li>
+              <li><a href="./Preqa.html" class="nav-link">Pre Quiz</a></li>
+              <li><a href="./Simulation.html" class="nav-link">Simulation</a></li>
+              <li><a href="#github-section" class="nav-link">Github</a></li>
+              <li><a href="./QA.html" class="nav-link">Post Quiz</a></li>
+              <li><a href="./References.html" class="nav-link">References</a></li>
+              <li><a href="./Contributors.html" class="nav-link">Contributors</a></li>
+          </ul>
+          <button id="downloadButton" style="font-size: 13px; height: 60px;">Download EXE</button>
+        </div>
+    </div>
+</nav>
+
+  <section id="theory-section">
+    <div class="quiz-container">
+      <h1>3 DOF Post Quiz</h1>
+      <br>
+      <form id="quiz-form" style="background-color: #ffffff;">
+        <div class="question">
+          <h2>1.What is the inverse kinematics solution for a 3 DOF RRR robot with joint limits and workspace constraints?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer0" value="Closed-form solution using trigonometric functions"> Closed-form solution using trigonometric functions</label>
+            <label><input type="radio" name="answer0" value="Iterative numerical solution using algorithms like Newton-Raphson"> Iterative numerical solution using algorithms like Newton-Raphson</label>
+            <label><input type="radio" name="answer0" value="Hybrid approach combining geometric methods and optimization techniques"> Hybrid approach combining geometric methods and optimization techniques</label>
+            <label><input type="radio" name="answer0" value="There is no general solution due to the complexity of constraints."> There is no general solution due to the complexity of constraints.</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>2. How does redundancy affect the inverse kinematics problem in 3 DOF RRR robots?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer1" value="a"> a. Redundancy simplifies the inverse kinematics problem.</label>
+            <label><input type="radio" name="answer1" value="b"> b. Redundancy introduces multiple solutions to the inverse kinematics problem.</label>
+            <label><input type="radio" name="answer1" value="c"> c. Redundancy has no impact on the inverse kinematics problem.</label>
+            <label><input type="radio" name="answer1" value="d"> d. Redundancy increases the computational complexity of inverse kinematics.</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>3. In what scenarios would you prefer using analytical methods over numerical methods for solving kinematics problems in robotics?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer2" value="a"> a. When dealing with highly nonlinear robot structures</label>
+            <label><input type="radio" name="answer2" value="b"> b. When real-time performance is critical</label>
+            <label><input type="radio" name="answer2" value="c"> c. When the robot has redundant degrees of freedom</label>
+            <label><input type="radio" name="answer2" value="d"> d. When the workspace is constrained and requires precise solutions</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>4. Explain the concept of singularity in 3 DOF RRR robots and its implications on robot control.</h2>
+          <div class="options">
+            <label><input type="radio" name="answer3" value="a"> a. Singularity refers to unreachable positions in the robot's workspace.</label>
+            <label><input type="radio" name="answer3" value="b"> b. Singularity occurs when the robot loses a degree of freedom temporarily.</label>
+            <label><input type="radio" name="answer3" value="c"> c. Singularity results in infinite solutions for the inverse kinematics problem.</label>
+            <label><input type="radio" name="answer3" value="d"> d. Singularity causes a breakdown in the robot's motion and control algorithms.</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>5. How do you mitigate joint limits and singularities in trajectory planning for 3 DOF RRR robots?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer4" value="a"> a. By using collision detection algorithms</label>
+            <label><input type="radio" name="answer4" value="b"> b. By incorporating joint limit avoidance techniques</label>
+            <label><input type="radio" name="answer4" value="c"> c. By employing path optimization algorithms</label>
+            <label><input type="radio" name="answer4" value="d"> d. By adjusting the robot's physical structure</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>6. Discuss the role of end-effectors and grippers in enhancing the functionality of 3 DOF RRR robots in different applications.</h2>
+          <div class="options">
+            <label><input type="radio" name="answer5" value="a"> a. End-effectors are essential for precision tasks, while grippers provide robust handling capabilities.</label>
+            <label><input type="radio" name="answer5" value="b"> b. Grippers are used for manipulation tasks, while end-effectors control tool orientation.</label>
+            <label><input type="radio" name="answer5" value="c"> c. End-effectors and grippers have interchangeable roles depending on the task complexity.</label>
+            <label><input type="radio" name="answer5" value="d"> d. Both end-effectors and grippers are primarily used for tool attachment and detachment.</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>7. What are some advanced control strategies used in 3 DOF RRR robots for improved performance and accuracy?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer6" value="a"> a. Model Predictive Control (MPC)</label>
+            <label><input type="radio" name="answer6" value="b"> b. Adaptive Control Techniques</label>
+            <label><input type="radio" name="answer6" value="c"> c. Reinforcement Learning-Based Control</label>
+            <label><input type="radio" name="answer6" value="d"> d. All of the above</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>8. How does the choice of actuators impact the dynamic performance of 3 DOF RRR robots?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer7" value="a"> a. Hydraulic actuators provide faster response times than electric actuators.</label>
+            <label><input type="radio" name="answer7" value="b"> b. Electric actuators offer better precision and control but may have slower response times.</label>
+            <label><input type="radio" name="answer7" value="c"> c. Pneumatic actuators are preferred for lightweight applications but have limited torque capabilities.</label>
+            <label><input type="radio" name="answer7" value="d"> d. Actuator choice has minimal impact on dynamic performance in 3 DOF RRR robots.</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>9. Explain the concept of workspace analysis in robotics and its significance in designing 3 DOF RRR robots.</h2>
+          <div class="options">
+            <label><input type="radio" name="answer8" value="a"> a. Workspace analysis determines the maximum reachable positions of the robot's end-effector.</label>
+            <label><input type="radio" name="answer8" value="b"> b. Workspace analysis focuses on optimizing the robot's power consumption.</label>
+            <label><input type="radio" name="answer8" value="c"> c. Workspace analysis evaluates the robot's structural integrity under load conditions.</label>
+            <label><input type="radio" name="answer8" value="d"> d. Workspace analysis is not relevant for 3 DOF RRR robots.</label>
+          </div>
+        </div>
+        <div class="question">
+          <h2>10. Discuss the challenges and advancements in implementing collaborative robotics using 3 DOF RRR robots in industrial settings.</h2>
+          <div class="options">
+            <label><input type="radio" name="answer9" value="a"> a. Challenges include safety protocols, human-robot interaction, and task allocation.</label>
+            <label><input type="radio" name="answer9" value="b"> b. Advancements include intuitive programming interfaces, adaptive control algorithms, and sensor integration.</label>
+            <label><input type="radio" name="answer9" value="c"> c. Collaborative robotics with 3 DOF RRR robots is limited due to their mechanical constraints.</label>
+            <label><input type="radio" name="answer9" value="d"> d. Both a) and b) are correct.</label>
+          </div>
+        </div>
+        
+          <button type="submit" style="background-color: black; color: #ffffff; border-radius: 10px;">Submit</button>
+          <button type="button" style="background-color: black; color: #ffffff; border-radius: 10px;" id="reset-btn">Reset</button>
+
+        
+      </form>
+      <!-- Score container to display the score -->
+      <div id="result-container">
+        <div id="score-container"></div>
+      </div>
+    </div>
+  
+    <script>
+      const questions = [
+        {
+          question: "What is the inverse kinematics solution for a 3 DOF RRR robot with joint limits and workspace constraints?",
+          options: ["Closed-form solution using trigonometric functions", "Iterative numerical solution using algorithms like Newton-Raphson", "Hybrid approach combining geometric methods and optimization techniques", "There is no general solution due to the complexity of constraints."],
+          answer: "Hybrid approach combining geometric methods and optimization techniques"
+        },
+        // Add other questions here
+      ];
+  
+      const quizForm = document.getElementById('quiz-form');
+      const resultContainer = document.getElementById('result-container');
+      const scoreContainer = document.getElementById('score-container');
+  
+      function checkAnswers(event) {
+        event.preventDefault();
+        let score = 0;
+        questions.forEach((questionData, index) => {
+          const selectedOption = document.querySelector(`input[name="answer${index}"]:checked`);
+          if (!selectedOption) {
+            alert(`Please select an option for Question ${index + 1}.`);
+            return;
+          }
+          const userAnswer = selectedOption.value;
+          const correctAnswer = questionData.answer;
+          const questionNumber = index + 1;
+          const resultMessage = document.createElement('p');
+          resultMessage.textContent = `Question ${questionNumber}: Correct Answer - ${correctAnswer}, Your Answer - ${userAnswer}`;
+          if (userAnswer === correctAnswer) {
+            resultMessage.classList.add('correct');
+            score++;
+          } else {
+            resultMessage.classList.add('incorrect');
+          }
+          resultContainer.appendChild(resultMessage);
+        });
+
+        // Display the score in the score container
+        const scoreMessage = document.createElement('p');
+        scoreMessage.textContent = `You scored ${score}/${questions.length}`;
+        scoreContainer.appendChild(scoreMessage);
+        scoreContainer.style.display = 'block'; // Show the score container
+      }
+
+      function resetQuiz() {
+        // Reset the form and clear the result and score containers
+        resultContainer.innerHTML = '';
+        scoreContainer.innerHTML = '';
+        scoreContainer.style.display = 'none'; // Hide the score container
+        quizForm.reset();
+      }
+
+      quizForm.addEventListener('submit', checkAnswers);
+      document.getElementById('reset-btn').addEventListener('click', resetQuiz);
+    </script>
+
+  <!-- Loader -->
+  <div id="unslate_co--overlayer"></div>
+  <div class="site-loader-wrap">
+    <div class="site-loader"></div>
+  </div>
+
+  <script src="js/scripts-dist.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('downloadButton').addEventListener('click', function() {
+      // URL to the executable file
+      var exeUrl = 'MyAppInstaller_web.exe';
+      
+      // Create a temporary anchor element
+      var anchor = document.createElement('a');
+      anchor.href = exeUrl;
+      anchor.download = 'MyAppInstaller_web.exe'; // Name of the downloaded file
+      anchor.click(); // Trigger the download
+    });
+  </script>
+</body>
+</html>

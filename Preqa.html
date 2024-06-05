@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>3DOF RRR Robotic Manipulator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="3DOF RRR Robotic Manipulator using Kolmogorov Arnold Network">
+  <meta name="keywords" content="robotics, 3DOF, RRR, Kolmogorov Arnold Network, KAN, simulation">
+  <meta name="author" content="Your Name">
+
+  <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    body {
+      background-color: #ffffff;
+    }
+    .unslate_co--site-nav {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+      padding-top: 20px;
+    }
+    .unslate_co--site-nav .site-nav-ul li a {
+      color: white; /* Change text color to white */
+    }
+    .site-logo-wrapper a {
+      color: white;
+    }
+    .site-logo-wrapper img {
+      margin: 0 15px 0 0;
+    }
+    #theory-section {
+      color: black; /* Ensure text color is black */
+      padding-top: 120px; /* Add top padding to avoid overlap with navbar */
+    }
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question {
+      margin-bottom: 20px;
+      background-color: transparent; /* Remove yellow background color */
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+    /* Style for the score container */
+    #score-container {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f8f9fa; /* Light gray background color */
+      border-radius: 5px;
+      text-align: center;
+    }
+    .unslate_co--site-nav {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+      padding-top: 20px;
+    }
+    .unslate_co--site-nav .site-nav-ul li a {
+      color: white; /* Change text color to white */
+    }
+    .site-logo-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .site-logo-wrapper a {
+      color: white;
+    }
+    .site-logo-wrapper img {
+      width: 50px;
+      margin-right: 10px;
+      border-radius: 20%;
+    }
+    #downloadButton {
+      background-color: black;
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 10px 20px; /* Adjust padding as needed */
+    }
+  </style>
+  
+</head>
+<body>
+  <nav class="unslate_co--site-nav site-nav-target" >
+    <div class="container">
+        <div class="site-logo-wrapper" style="display: flex; align-items: center; position: absolute; left: 0; top: 0;">
+            <img src="./Files/images/alogo.png" alt="Amrita Logo" style="width: 50px; margin-right: 10px; border-radius: 20%;">
+            <a href="index.html" class="unslate_co--site-logo" style="padding-top: 5px;">Group 9<span>.</span></a>
+            <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block" style="padding-left: 30px;">
+              <li><a href="./index.html" class="nav-link" >Home</a></li>
+              <li><a href="./Theory.html" class="nav-link">Theory</a></li>
+              <li><a href="./Preqa.html" class="nav-link">Pre Quiz</a></li>
+              <li><a href="./Simulation.html" class="nav-link">Simulation</a></li>
+              <li><a href="#github-section" class="nav-link">Github</a></li>
+              <li><a href="./QA.html" class="nav-link">Post Quiz</a></li>
+              <li><a href="./References.html" class="nav-link">References</a></li>
+              <li><a href="./Contributors.html" class="nav-link">Contributors</a></li>
+          </ul>
+          <button id="downloadButton" style="font-size: 13px; height: 60px;">Download EXE</button>
+        </div>
+    </div>
+</nav>
+
+  <section id="theory-section">
+    <div class="quiz-container">
+      <h1>3 DOF Pre Quiz</h1>
+      <br>
+      <form id="quiz-form" style="background-color: #ffffff;">
+        
+        <div class="question">
+          <h2>1. What does "DOF" stand for in "3 DOF RRR Robot"?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer1" value="Degree of Freedom"> Degree of Freedom</label>
+            <label><input type="radio" name="answer1" value="Dual Operational Function"> Dual Operational Function</label>
+            <label><input type="radio" name="answer1" value="Direct Output Format"> Direct Output Format</label>
+            <label><input type="radio" name="answer1" value="Data Oriented Feature"> Data Oriented Feature</label>
+          </div>
+        </div>
+        
+        <div class="question">
+          <h2>2. How many joints does a 3 DOF RRR robot typically have?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer2" value="1"> 1</label>
+            <label><input type="radio" name="answer2" value="2"> 2</label>
+            <label><input type="radio" name="answer2" value="3"> 3</label>
+            <label><input type="radio" name="answer2" value="4"> 4</label>
+          </div>
+        </div>
+        
+        <div class="question">
+          <h2>3. Which of the following is NOT a typical application of a 3 DOF RRR robot?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer3" value="Industrial Automation"> Industrial Automation</label>
+            <label><input type="radio" name="answer3" value="Medical Robotics"> Medical Robotics</label>
+            <label><input type="radio" name="answer3" value="Agricultural Robotics"> Agricultural Robotics</label>
+            <label><input type="radio" name="answer3" value="None of the above"> None of the above</label>
+          </div>
+        </div>
+        
+        <div class="question">
+          <h2>4. What is the purpose of the RRR in the robot's name?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer4" value="Representing the robot's rotational capabilities"> Representing the robot's rotational capabilities</label>
+            <label><input type="radio" name="answer4" value="Referring to the robot's range of motion"> Referring to the robot's range of motion</label>
+            <label><input type="radio" name="answer4" value="Denoting the robot's rigid structure"> Denoting the robot's rigid structure</label>
+            <label><input type="radio" name="answer4" value="Signifying the robot's reliability"> Signifying the robot's reliability</label>
+          </div>
+        </div>
+        
+        <div class="question">
+          <h2>5.What does the term "kinematic chain" refer to in robotics?</h2>
+          <div class="options">
+            <label><input type="radio" name="answer5" value="A sequence of joints connected together in a robot's structure."> A sequence of joints connected together in a robot's structure.</label>
+            <label><input type="radio" name="answer5" value="A mathematical equation for robot motion planning"> A mathematical equation for robot motion planning</label>
+            <label><input type="radio" name="answer5" value="A type of robotic gripper mechanism"> A type of robotic gripper mechanism</label>
+            <label><input type="radio" name="answer5" value="A control algorithm for robot navigation"> A control algorithm for robot navigation</label>
+          </div>
+        </div>
+        <button type="submit" style="background-color: black; color: #ffffff; border-radius: 10px;">Submit</button>
+        <button type="button" style="background-color: black; color: #ffffff; border-radius: 10px;" id="reset-btn">Reset</button>
+      </form>
+    <div id="score-container" style="width: 100%; height: 40px; color: black; font-size: larger;"></div>
+    <div id="sdip" style="text-align: left; padding-top: 50px;"></div>
+  </div>
+</section>
+
+<script>
+  const questions = [
+    {
+      correctAnswer: "Degree of Freedom",
+    },
+    {
+      correctAnswer: "3",
+    },
+    {
+      correctAnswer: "None of the above",
+    },
+    {
+      correctAnswer: "Representing the robot's rotational capabilities",
+    },
+    {
+      correctAnswer: "A sequence of joints connected together in a robot's structure",
+    },
+  ];
+  
+  document.getElementById("quiz-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  let score = 0;
+  const answers = new FormData(event.target);
+  const scoreContainer = document.getElementById("score-container");
+  const scoreContent = document.createElement("div");
+
+  answers.forEach((value, key) => {
+    const questionIndex = parseInt(key.replace("answer", ""), 10);
+    const question = questions[questionIndex - 1];
+    const answerContainer = document.createElement("div");
+    const correctAnswer = document.createElement("span");
+    const yourAnswer = document.createElement("span");
+
+    if (question.correctAnswer === value) {
+      score++;
+      answerContainer.className = "correct";
+    } else {
+      answerContainer.className = "incorrect";
+    }
+
+    correctAnswer.textContent = `Correct Answer: ${question.correctAnswer}`;
+    yourAnswer.textContent = `Your Answer: ${value}`;
+
+    answerContainer.appendChild(correctAnswer);
+    answerContainer.appendChild(yourAnswer);
+    scoreContent.appendChild(answerContainer);
+  });
+
+  scoreContainer.textContent = `Your score is ${score} out of ${questions.length}`;
+  scoreContainer.appendChild(scoreContent);
+  scoreContainer.style.display = "block"; // Ensure the container is visible
+});
+
+document.getElementById("reset-btn").addEventListener("click", function() {
+  document.getElementById("quiz-form").reset();
+  const scoreContainer = document.getElementById("sdip");
+  scoreContainer.textContent = "";
+  scoreContainer.style.display = "none";
+});
+
+
+</script>
+</body>
+</html>

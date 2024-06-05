@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>3DOF RRR Robotic Manipulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="3DOF RRR Robotic Manipulator using Kolmogorov Arnold Network">
+  <meta name="keywords" content="robotics, 3DOF, RRR, Kolmogorov Arnold Network, KAN, simulation">
+  <meta name="author" content="Your Name">
+
+  <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    body {
+      background-color: #ffffff;
+    }
+    .unslate_co--site-nav {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+      padding-top: 20px;
+    }
+    .unslate_co--site-nav .site-nav-ul li a {
+      color: white; /* Change text color to white */
+    }
+    .site-logo-wrapper a {
+      color: white;
+    }
+    .site-logo-wrapper img {
+      margin: 0 15px 0 0;
+    }
+    #theory-section {
+      color: black; /* Ensure text color is black */
+      padding-top: 120px; /* Add top padding to avoid overlap with navbar */
+    }
+    .boxes {
+  display: flex;           /* Apply flexbox layout */
+  justify-content: center; /* Center items horizontally */
+  padding: 20px;  
+  gap: 20px;               /* Add space between items */
+}
+
+/* Common styling for each box */
+.box1, .box2, .box3 {
+  width: 400px;            /* Width of the box */
+  height: 500px;           /* Height of the box */
+  background-color: white; /* Background color of the box */
+  border-radius: 5px;
+  color: white;            /* Text color */
+  padding: 5px;           /* Padding inside the box */
+  text-align: center;      /* Center-align text */
+  display: flex;           /* Use flexbox layout */
+  flex-direction: column;  /* Arrange children in a column */
+  align-items: center;     /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  font-family: Arial, sans-serif; /* Font family */
+  position: relative;      /* For positioning text box */
+}
+
+.box1 img,.box3 img {
+  width: 80%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.box2 img{
+  max-width: 350px;         /* Ensure images don't exceed the box width */
+  height: auto;  
+  margin: 0px 0px;          /* Maintain aspect ratio */
+}
+
+.text-box {
+  background-color: rgba(0, 0, 0); /* Semi-transparent background */
+  padding: 15px;            /* Padding inside the text box */
+  border-radius: 5px;       /* Rounded corners */
+  margin-bottom: 10px;
+  position: absolute;       /* Absolute positioning */
+  bottom: 10px;             /* Position from the bottom */
+  left: 50%;                /* Center horizontally */
+  transform: translateX(-50%); /* Center the box */
+}
+
+.text-box a {
+  text-decoration: none;
+  margin: 0;                /* Remove default margin */
+  font-family: sans-serif;
+  color: white;             /* Text color */
+}
+
+figure {
+  display: grid;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+figure > * {
+  grid-area: 1/1;
+  transition: .4s;
+}
+figure figcaption {
+  display: grid;
+  align-items: end;
+  font-family: sans-serif;
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #0000;
+  padding: .75rem;
+  background: var(--c,#0009);
+  clip-path: inset(0 var(--_i,100%) 0 0);
+  -webkit-mask:
+    linear-gradient(#000 0 0),
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  -webkit-mask-clip: text, padding-box;
+  margin: -1px;
+}
+figure:hover figcaption{
+  --_i: 0%;
+}
+figure:hover img {
+  transform: scale(1.2);
+}
+@supports not (-webkit-mask-clip: text) {
+  figure figcaption {
+   -webkit-mask: none;
+   color: #fff;
+  }
+}
+.unslate_co--site-nav {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+      padding-top: 20px;
+    }
+    .unslate_co--site-nav .site-nav-ul li a {
+      color: white; /* Change text color to white */
+    }
+    .site-logo-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .site-logo-wrapper a {
+      color: white;
+    }
+    .site-logo-wrapper img {
+      width: 50px;
+      margin-right: 10px;
+      border-radius: 20%;
+    }
+    #downloadButton {
+      background-color: black;
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 10px 20px; /* Adjust padding as needed */
+    }
+
+  </style>
+  
+</head>
+<body>
+  <nav class="unslate_co--site-nav site-nav-target" >
+    <div class="container">
+        <div class="site-logo-wrapper" style="display: flex; align-items: center; position: absolute; left: 0; top: 0;">
+            <img src="./Files/images/alogo.png" alt="Amrita Logo" style="width: 50px; margin-right: 10px; border-radius: 20%;">
+            <a href="index.html" class="unslate_co--site-logo" style="padding-top: 5px;">Group 9<span>.</span></a>
+            <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block" style="padding-left: 30px;">
+              <li><a href="./index.html" class="nav-link" >Home</a></li>
+              <li><a href="./Theory.html" class="nav-link">Theory</a></li>
+              <li><a href="./Preqa.html" class="nav-link">Pre Quiz</a></li>
+              <li><a href="./Simulation.html" class="nav-link">Simulation</a></li>
+              <li><a href="#github-section" class="nav-link">Github</a></li>
+              <li><a href="./QA.html" class="nav-link">Post Quiz</a></li>
+              <li><a href="./References.html" class="nav-link">References</a></li>
+              <li><a href="./Contributors.html" class="nav-link">Contributors</a></li>
+          </ul>
+          <button id="downloadButton" style="font-size: 13px; height: 60px;">Download EXE</button>
+        </div>
+    </div>
+</nav>
+
+  <section id="theory-section">
+    <div class="container">
+      <h2 style="color: black;">Theory</h2>
+      <div class="boxes">
+        <div class="box1">
+          <figure> 
+            <img src="./Files/images/3dof1.png" alt="3DOF 1"> 
+            <figcaption> 3 DOF ROBOT </figcaption>
+          </figure>
+          <div class="text-box">
+            <a href="#it">Aim & Objective</a>
+          </div>
+        </div>
+        <div class="box2">
+          <figure>
+            <img src="./Files/images/3dof2.png" alt="3DOF 2">
+            <figcaption> 3 DOF ROBOT </figcaption>
+          </figure>
+          <div class="text-box">
+            <a href="#kinema">KINEMATICS</a>
+          </div>
+        </div>
+        <div class="box3">
+          <figure>
+            <img src="./Files/images/3dof3.png" alt="3DOF 3">
+            <figcaption> 3 DOF ROBOT </figcaption>
+          </figure>
+          <div class="text-box">
+            <a href="#appl">Applications</a>
+          </div>
+          <br
+          <div class="intro">
+            
+      </div>
+          </div>
+          <div class="in" id="it" style="padding-top:200px;">
+            <section class="aim">
+              <h1><b>Aim</b></h1>
+              <p>The aim is to create an interactive website that includes a simulation of the RRR Manipulator, pre- and post-quizzes, theoretical content on RRR Manipulator kinematics and applications, and a comparative analysis of KAN models with MLP.</p>
+            </section>
+            <br>
+            <section class="objective">
+              <h1><b>Objective</b></h1>
+              <p><b>Objective 1: </b>Develop and compare the performance of Multilayer Perceptron (MLP), KAN: Kolmogorov-Arnold Networks(KAN), and Fourier-KAN, Fast-KAN, Kolmogorov-Arnold Networks (KAN) using Chebyshev polynomials for both forward and inverse kinematics of the RRR articulated robot.</p>
+              <p><b>Objective 2: </b>Create an interactive MATLAB app to visualize the simulation of the RRR robot, allowing users to input joint angles and observe the corresponding end-effector positions in real-time.</p>
+            </section>
+            
+      
+      
+            </div>
+            <div class="kinematics" id="kinema" style="padding-top:60px;">
+              <h1><b>Introduction to the 3 DOF RRR Manipulator</b></h1>
+              <p>
+                  In the field of robotics, manipulators are widely used to perform a variety of tasks ranging from simple pick-and-place operations to complex assembly processes. A 3 Degree of Freedom (DOF) Revolute-Revolute-Revolute (RRR) manipulator is a fundamental type of robotic arm that consists of three rotational joints. This configuration allows for a high degree of flexibility and a wide range of motion, making it suitable for many applications in industrial automation, medical robotics, and research.
+              </p>
+              
+              <h2>Overview of Robotic Manipulators</h2>
+              <p>
+                  Robotic manipulators are mechanical systems designed to interact with the environment through end-effectors, which can be tools, grippers, or sensors. The DOF in a manipulator refers to the number of independent movements it can perform. In the case of an RRR manipulator, each joint provides a rotational movement, leading to three distinct rotational motions.
+              </p>
+              
+              <h2>The RRR Configuration</h2>
+              <p>
+                  The RRR manipulator is named after its joint configuration:
+              </p>
+              <ul>
+                  <li><strong>Revolute Joints:</strong> These joints allow rotational movement around an axis. In the RRR manipulator, all three joints are revolute, which means they provide rotation without any translational motion.</li>
+              </ul>
+              <p>
+                  The typical structure of an RRR manipulator includes:
+              </p>
+              <ol>
+                  <li><strong>Base Joint (J1):</strong> This is the first revolute joint, usually fixed to the base or ground, allowing the first link to rotate around a vertical or horizontal axis.</li>
+                  <li><strong>Shoulder Joint (J2):</strong> The second revolute joint connects the first link to the second link, allowing rotation around a different axis.</li>
+                  <li><strong>Elbow Joint (J3):</strong> The third revolute joint connects the second link to the third link or end-effector, providing the final degree of rotation.</li>
+              </ol>
+              
+              
+              <h2>Kinematics and Dynamics</h2>
+              <p>
+                  Understanding the kinematics (motion) and dynamics (forces and torques) of the RRR manipulator is essential for its design and control:
+              </p>
+              <ul>
+                  <li><strong>Forward Kinematics:</strong> This involves determining the position and orientation of the end-effector given the joint angles. It provides insight into how the manipulator reaches a desired point in space.</li>
+                  <li><strong>Inverse Kinematics:</strong> This is the process of calculating the joint angles required to place the end-effector at a specific position and orientation. It is crucial for path planning and control.</li>
+                  <li><strong>Dynamics:</strong> The study of forces and torques required to achieve the desired motion. This includes analyzing the effects of gravity, friction, and other external forces on the manipulator's movement.</li>
+              </ul>
+              <div style="display: flex;">
+                <div style="width: 30%;"></div>
+                <img src="./Files/images/kad.jpg" style="width: 40%; border-radius: 10px;"  >
+                
+              </div>
+              
+              <h2>Control Strategies</h2>
+              <p>
+                  Effective control of a 3 DOF RRR manipulator involves several strategies:
+              </p>
+              <ul>
+                  <li><strong>PID Control:</strong> Proportional-Integral-Derivative (PID) controllers are widely used for their simplicity and effectiveness in providing stable and responsive control.</li>
+                  <li><strong>Model Predictive Control (MPC):</strong> This advanced method uses a model of the manipulator to predict future states and optimize control inputs.</li>
+                  <li><strong>Adaptive Control:</strong> Adaptive strategies adjust control parameters in real-time to cope with changes in the manipulator's dynamics or external disturbances.</li>
+              </ul>
+              
+              <h2>Forward Kinematics</h2>
+              <p>
+                  The forward kinematics of the 3 DOF Manipulator is performed using DH Parameters which are considered to be standard for robot kinematics.
+              </p>
+              <p>
+                  <strong>Table-1: DH parameters of the 3 DOF Manipulator</strong>
+                  <br>
+                  <img src="./tphotos/Picture1.png" width="400px" style="padding-left: 100px;">
+              </p>
+              <p>
+                  The position and orientation of the robot end-effector can be represented by the Homogeneous Transformation matrix.
+                  <br>
+                  <img src="./tphotos/Picture2.png" width="80%" style="padding-left: 100px;">
+              </p>
+              <p>
+                  Where the px, py, pz represent the robot end-effector in x, y, z directions and R11…R33 represents the orientation of the robot end-effector.
+              </p>
+              
+              <h2>Inverse Kinematics</h2>
+              <p>
+                  In the Inverse Kinematics, the joint variables θ1, θ2, θ3 are determined using the geometrical approach. This approach solves the joint variable θi by projecting the robot onto the plane of xi-1 - yi-1 and then solving it with trigonometry.
+                      
+                </p>
+              <p>
+                  The joint variables are given by the following equation:
+                  <br>
+                  <img src="./tphotos/Picture3.png" width="30%" style="padding-left: 100px;"> 
+                  <br>
+                  <br>
+                  <img src="./tphotos/Picture4.png" width="30%" style="padding-left: 100px;"> 
+              </p>
+              <p><img src="./tphotos/Picture5.png" width="100%" style="padding-left: 100px;"> </p> 
+              <div class="app" id="appl" style="padding-top: 60px;">
+              <h1><b>Importance and Applications</b></h1>
+              <p>
+                  The 3 DOF RRR manipulator is crucial in various applications due to its simplicity and effectiveness:
+              </p>
+              <ul>
+                  <li><strong>Industrial Automation:</strong> In manufacturing, RRR manipulators are used for tasks such as welding, painting, and material handling due to their precise control and flexibility.</li>
+                  <li><strong>Medical Robotics:</strong> These manipulators can be employed in minimally invasive surgeries, where precise and controlled movements are essential.</li>
+                  <li><strong>Research and Development:</strong> In academia and research institutions, RRR manipulators serve as testbeds for developing new algorithms in control systems, kinematics, and dynamics.</li>
+              </ul>
+              <div style="display: flex;">
+                <div style="width: 5%;"></div>
+                <img src="./Files/images/ap1.webp" style="width: 40%; border-radius: 10px;"  >
+              <div style="width: 10%;"></div>
+                <img src="./Files/images/ap2.png" style="width: 40%; border-radius: 10px;" >
+                
+              </div>
+              <br>
+              <h2>Conclusion</h2>
+              <p>
+                  The 3 DOF RRR manipulator is a versatile and essential tool in the field of robotics. Its simple yet effective design allows for a wide range of applications, from industrial automation to advanced research. Understanding its kinematics, dynamics, and control strategies is crucial for developing efficient and precise robotic systems. As technology advances, the role of RRR manipulators will continue to expand, driving innovation and efficiency in various domains.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+  <!-- Loader -->
+  <div id="unslate_co--overlayer"></div>
+  <div class="site-loader-wrap">
+    <div class="site-loader"></div>
+  </div>
+
+  <script src="js/scripts-dist.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('downloadButton').addEventListener('click', function() {
+      // URL to the executable file
+      var exeUrl = 'MyAppInstaller_web.exe';
+      
+      // Create a temporary anchor element
+      var anchor = document.createElement('a');
+      anchor.href = exeUrl;
+      anchor.download = 'MyAppInstaller_web.exe'; // Name of the downloaded file
+      anchor.click(); // Trigger the download
+    });
+  </script>
+</body>
+</html>

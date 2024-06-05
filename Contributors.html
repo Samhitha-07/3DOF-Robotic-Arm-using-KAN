@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>3DOF RRR Robotic Manipulator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="3DOF RRR Robotic Manipulator using Kolmogorov Arnold Network">
+  <meta name="keywords" content="robotics, 3DOF, RRR, Kolmogorov Arnold Network, KAN, simulation">
+  <meta name="author" content="Your Name">
+
+  <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    body {
+      background-color: #ffffff;
+    }
+    .unslate_co--site-nav {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+      padding-top: 20px;
+    }
+    .unslate_co--site-nav .site-nav-ul li a {
+      color: white; /* Change text color to white */
+    }
+    .site-logo-wrapper a {
+      color: white;
+    }
+    .site-logo-wrapper img {
+      margin: 0 15px 0 0;
+    }
+    #theory-section {
+      color: black; /* Ensure text color is black */
+      padding-top: 120px; /* Add top padding to avoid overlap with navbar */
+    }
+    .boxes {
+      display: flex; /* Use flexbox for the boxes */
+      justify-content: space-around; /* Space items evenly */
+      flex-wrap: wrap; /* Allow items to wrap to new line */
+      gap: 20px; /* Add space between items */
+      padding: 20px; /* Add padding to the container */
+    }
+
+    .box {
+      background-color: white; /* Background color of the box */
+      border-radius: 5px;
+      color: black; /* Text color */
+      padding: 10px; /* Padding inside the box */
+      text-align: center; /* Center-align text */
+      font-family: Arial, sans-serif; /* Font family */
+      width: 300px; /* Set width of the box */
+    }
+
+    .box img {
+      max-width: 100%; /* Ensure images don't exceed the box width */
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .text-box {
+      background-color: rgba(0, 0, 0, 0.539); /* Semi-transparent background */
+      color: white;
+      font-size: large;
+      padding: 10px; /* Padding inside the text box */
+      border-radius: 5px; /* Rounded corners */
+      margin-top: auto; /* Push text to bottom */
+      width: 100%; /* Set width to fill the box */
+    }
+
+    .text-box a {
+      text-decoration: none;
+      color: white; /* Text color */
+      font-family: sans-serif;
+    }
+
+    figure {
+      display: grid;
+      border-radius: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    figure > * {
+      grid-area: 1/1;
+      transition: .4s;
+    }
+
+    figure figcaption {
+      display: grid;
+      align-items: end;
+      font-family: sans-serif;
+      font-size: 100px; /* Increased font size */
+      font-weight: bold;
+      color: #0000;
+      padding: 1rem; /* Increased padding */
+      background: var(--c, #0009);
+      clip-path: inset(0 var(--_i, 100%) 0 0);
+      -webkit-mask: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      -webkit-mask-clip: text, padding-box;
+      margin: -1px;
+    }
+
+    figure:hover figcaption {
+      --_i: 0%;
+    }
+
+    figure:hover img {
+      transform: scale(1.2);
+    }
+
+    @supports not (-webkit-mask-clip: text) {
+      figure figcaption {
+        -webkit-mask: none;
+        color: #fff;
+      }
+    }
+    .unslate_co--site-nav {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+      padding-top: 20px;
+    }
+    .unslate_co--site-nav .site-nav-ul li a {
+      color: white; /* Change text color to white */
+    }
+    .site-logo-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .site-logo-wrapper a {
+      color: white;
+    }
+    .site-logo-wrapper img {
+      width: 50px;
+      margin-right: 10px;
+      border-radius: 20%;
+    }
+    #downloadButton {
+      background-color: black;
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 10px 20px; /* Adjust padding as needed */
+    }
+  </style>
+  
+</head>
+<body>
+  <nav class="unslate_co--site-nav site-nav-target" >
+    <div class="container">
+        <div class="site-logo-wrapper" style="display: flex; align-items: center; position: absolute; left: 0; top: 0;">
+            <img src="./Files/images/alogo.png" alt="Amrita Logo" style="width: 50px; margin-right: 10px; border-radius: 20%;">
+            <a href="index.html" class="unslate_co--site-logo" style="padding-top: 5px;">Group 9<span>.</span></a>
+            <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block" style="padding-left: 30px;">
+              <li><a href="./index.html" class="nav-link" >Home</a></li>
+              <li><a href="./Theory.html" class="nav-link">Theory</a></li>
+              <li><a href="./Preqa.html" class="nav-link">Pre Quiz</a></li>
+              <li><a href="./Simulation.html" class="nav-link">Simulation</a></li>
+              <li><a href="#github-section" class="nav-link">Github</a></li>
+              <li><a href="./QA.html" class="nav-link">Post Quiz</a></li>
+              <li><a href="./References.html" class="nav-link">References</a></li>
+              <li><a href="./Contributors.html" class="nav-link">Contributors</a></li>
+          </ul>
+          <button id="downloadButton" style="font-size: 13px; height: 60px;">Download EXE</button>
+        </div>
+    </div>
+</nav>
+
+  <section id="theory-section">
+    <div class="container">
+      <h2 style="color: black;"></h2>
+      <div class="boxes">
+        <div class="box" style="align-items: center;">
+          <figure> 
+            <img src="./Files/images/sir.jpeg" alt="122img"> 
+            <figcaption> PROFFSER </figcaption>
+          </figure>
+          <div class="text-box" style="width: 100%;">
+            <a>Navaneeth Haridasan<br> Assistant Professor <br> Amrita Vishwa Vidyapeetham</a>
+          </div>
+        </div>
+        <div class="box">
+          <figure> 
+            <img src="./Files/images/giri.jpeg" alt="122img"> 
+            <figcaption> 122 </figcaption>
+          </figure>
+          <div class="text-box">
+            <a>GIRI PRASATH R<br> CB.EN.U4AIE22122</a>
+          </div>
+        </div>
+        <div class="box">
+          <figure>
+            <img src="./Files/images/harish.jpg" alt="124img">
+            <figcaption> 124</figcaption>
+          </figure>
+          <div class="text-box">
+            <a>HARISH VIJAY V<br> CB.EN.U4AIE22124</a>
+          </div>
+        </div>
+        <div class="box">
+          <figure>
+            <img src="./Files/images/sam.jpg" alt="150img">
+            <figcaption> 150 </figcaption>
+          </figure>
+          <div class="text-box">
+            <a>SAMHITHA S<br> CB.EN.U4AIE22150</a>
+          </div>
+        </div>
+        <div class="box">
+          <figure> 
+            <img src="./Files/images/vasinavi.jpg" alt="158img"> 
+            <figcaption> 158 </figcaption>
+          </figure>
+          <div class="text-box">
+            <a>VAISHNAVI VENKAT<br> CB.EN.U4AIE22158</a>
+          </div>
+        </div>
+        <div class="box">
+          <figure>
+            <img src="./Files/images/sri.jpg" alt="165img">
+            <figcaption> 165</figcaption>
+          </figure>
+          <div class="text-box">
+            <a>IPPATAPU VENKATA SRICHANDRA<br> CB.EN.U4AIE22165</a>
+          </div>
+
+        </div>
+      </div>
+      
+            
+     
+
+
+  <!-- Loader -->
+  <div id="unslate_co--overlayer"></div>
+  <div class="site-loader-wrap">
+    <div class="site-loader"></div>
+  </div>
+
+  <script src="js/scripts-dist.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('downloadButton').addEventListener('click', function() {
+      // URL to the executable file
+      var exeUrl = 'MyAppInstaller_web.exe';
+      
+      // Create a temporary anchor element
+      var anchor = document.createElement('a');
+      anchor.href = exeUrl;
+      anchor.download = 'MyAppInstaller_web.exe'; // Name of the downloaded file
+      anchor.click(); // Trigger the download
+    });
+  </script>
+</body>
+</html>

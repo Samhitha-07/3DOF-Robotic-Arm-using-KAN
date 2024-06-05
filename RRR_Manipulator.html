@@ -1,0 +1,776 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>RRR_Manipulator</title><meta name="generator" content="MATLAB 9.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-06-02"><meta name="DC.source" content="RRR_Manipulator.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> varargout = RRR_Manipulator(varargin)
+<span class="comment">% RRR_MANIPULATOR MATLAB code for RRR_Manipulator.fig</span>
+<span class="comment">%      RRR_MANIPULATOR, by itself, creates a new RRR_MANIPULATOR or raises the existing</span>
+<span class="comment">%      singleton*.</span>
+<span class="comment">%</span>
+<span class="comment">%      H = RRR_MANIPULATOR returns the handle to a new RRR_MANIPULATOR or the handle to</span>
+<span class="comment">%      the existing singleton*.</span>
+<span class="comment">%</span>
+<span class="comment">%      RRR_MANIPULATOR('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+<span class="comment">%      function named CALLBACK in RRR_MANIPULATOR.M with the given input arguments.</span>
+<span class="comment">%</span>
+<span class="comment">%      RRR_MANIPULATOR('Property','Value',...) creates a new RRR_MANIPULATOR or raises the</span>
+<span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+<span class="comment">%      applied to the GUI before RRR_Manipulator_OpeningFcn gets called.  An</span>
+<span class="comment">%      unrecognized property name or invalid value makes property application</span>
+<span class="comment">%      stop.  All inputs are passed to RRR_Manipulator_OpeningFcn via varargin.</span>
+<span class="comment">%</span>
+<span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one</span>
+<span class="comment">%      instance to run (singleton)".</span>
+<span class="comment">%</span>
+<span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+
+<span class="comment">% Edit the above text to modify the response to help RRR_Manipulator</span>
+
+<span class="comment">% Last Modified by GUIDE v2.5 22-May-2024 10:28:40</span>
+
+<span class="comment">% Begin initialization code - DO NOT EDIT</span>
+gui_Singleton = 1;
+gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+                   <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+                   <span class="string">'gui_OpeningFcn'</span>, @RRR_Manipulator_OpeningFcn, <span class="keyword">...</span>
+                   <span class="string">'gui_OutputFcn'</span>,  @RRR_Manipulator_OutputFcn, <span class="keyword">...</span>
+                   <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+                   <span class="string">'gui_Callback'</span>,   []);
+<span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+<span class="keyword">else</span>
+    gui_mainfcn(gui_State, varargin{:});
+<span class="keyword">end</span>
+<span class="comment">% End initialization code - DO NOT EDIT</span>
+
+
+<span class="comment">% --- Executes just before RRR_Manipulator is made visible.</span>
+<span class="keyword">function</span> RRR_Manipulator_OpeningFcn(hObject, eventdata, handles, varargin)
+<span class="comment">% This function has no output args, see OutputFcn.</span>
+<span class="comment">% hObject    handle to figure</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+<span class="comment">% varargin   command line arguments to RRR_Manipulator (see VARARGIN)</span>
+
+<span class="comment">% Choose default command line output for RRR_Manipulator</span>
+handles.output = hObject;
+
+<span class="comment">% Update handles structure</span>
+guidata(hObject, handles);
+
+<span class="comment">% UIWAIT makes RRR_Manipulator wait for user response (see UIRESUME)</span>
+<span class="comment">% uiwait(handles.figure1);</span>
+
+
+<span class="comment">% --- Outputs from this function are returned to the command line.</span>
+<span class="keyword">function</span> varargout = RRR_Manipulator_OutputFcn(hObject, eventdata, handles)
+<span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+<span class="comment">% hObject    handle to figure</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Get default command line output from handles structure</span>
+varargout{1} = handles.output;
+
+
+
+<span class="keyword">function</span> Theta_1_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Theta_1 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of Theta_1 as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of Theta_1 as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> Theta_1_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Theta_1 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> Theta_2_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Theta_2 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of Theta_2 as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of Theta_2 as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> Theta_2_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Theta_2 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> Theta_3_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Theta_3 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of Theta_3 as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of Theta_3 as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> Theta_3_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Theta_3 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> Pos_X_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Pos_X (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of Pos_X as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of Pos_X as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> Pos_X_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Pos_X (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> Pos_Y_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Pos_Y (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of Pos_Y as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of Pos_Y as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> Pos_Y_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Pos_Y (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> Pos_Z_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Pos_Z (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'String') returns contents of Pos_Z as text</span>
+<span class="comment">%        str2double(get(hObject,'String')) returns contents of Pos_Z as a double</span>
+
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> Pos_Z_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to Pos_Z (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+<span class="comment">%       See ISPC and COMPUTER.</span>
+<span class="keyword">if</span> ispc &amp;&amp; isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="keyword">function</span> btn_Forward_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to btn_Forward (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Get the angles from the GUI inputs and convert to radians</span>
+Th_1 = str2double(get(handles.Theta_1, <span class="string">'String'</span>)) * pi / 180;
+Th_2 = str2double(get(handles.Theta_2, <span class="string">'String'</span>)) * pi / 180;
+Th_3 = str2double(get(handles.Theta_3, <span class="string">'String'</span>)) * pi / 180;
+
+<span class="comment">% Define link lengths</span>
+L_1 = 20;
+L_2 = 50;
+L_3 = 40;
+
+<span class="comment">% Create the robot links</span>
+L(1) = Link([0 L_1 0 pi/2]);
+L(2) = Link([0 0 L_2 0]);
+L(3) = Link([0 0 L_3 0]);
+
+<span class="comment">% Create the serial link robot</span>
+Robot = SerialLink(L);
+Robot.name = <span class="string">'RRR Robot'</span>;
+
+<span class="comment">% Perform forward kinematics to get the end effector position</span>
+T = Robot.fkine([Th_1, Th_2, Th_3]);
+
+<span class="comment">% Update the position display in the GUI</span>
+set(handles.Pos_X, <span class="string">'String'</span>, num2str(floor(T.t(1))));
+set(handles.Pos_Y, <span class="string">'String'</span>, num2str(floor(T.t(2))));
+set(handles.Pos_Z, <span class="string">'String'</span>, num2str(floor(T.t(3))));
+
+
+
+
+
+    <span class="keyword">function</span> btn_Inverse_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to btn_Inverse (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+PX = str2double(get(handles.Pos_X, <span class="string">'String'</span>));
+PY = str2double(get(handles.Pos_Y, <span class="string">'String'</span>));
+PZ = str2double(get(handles.Pos_Z, <span class="string">'String'</span>));
+
+<span class="comment">% Check if the entered positions are valid numbers</span>
+<span class="keyword">if</span> isnan(PX) || isnan(PY) || isnan(PZ)
+    errordlg(<span class="string">'Invalid position values. Please enter numeric values for X, Y, and Z.'</span>, <span class="string">'Input Error'</span>);
+    <span class="keyword">return</span>;
+<span class="keyword">end</span>
+
+<span class="comment">% Define link lengths</span>
+L_1 = 20;
+L_2 = 50;
+L_3 = 40;
+
+<span class="comment">% Create the robot links</span>
+L(1) = Link([0 L_1 0 pi/2]);
+L(2) = Link([0 0 L_2 0]);
+L(3) = Link([0 0 L_3 0]);
+
+<span class="comment">% Create the serial link robot</span>
+Robot = SerialLink(L);
+Robot.name = <span class="string">'RRR Robot'</span>;
+
+<span class="comment">% Create the transformation matrix for the desired end effector position</span>
+T = transl(PX, PY, PZ);
+
+<span class="comment">% Solve for the inverse kinematics with a mask [1 1 1 0 0 0] and a better initial guess</span>
+<span class="keyword">try</span>
+    <span class="comment">% Initial guess for the joint angles</span>
+    initial_guess = [0, 0, 0];
+    J = Robot.ikine(T, <span class="string">'mask'</span>, [1 1 1 0 0 0], <span class="string">'q0'</span>, initial_guess);
+
+    <span class="comment">% Convert from radians to degrees</span>
+    J = J * 180 / pi;
+
+    <span class="comment">% Update the joint angle displays</span>
+    set(handles.Theta_1, <span class="string">'String'</span>, num2str(floor(J(1))));
+    set(handles.Theta_2, <span class="string">'String'</span>, num2str(floor(J(2))));
+    set(handles.Theta_3, <span class="string">'String'</span>, num2str(floor(J(3))));
+
+<span class="keyword">catch</span> ME
+    <span class="comment">% Display an error dialog if inverse kinematics fails</span>
+    errordlg([<span class="string">'Inverse kinematics failed: '</span>, ME.message], <span class="string">'IK Error'</span>);
+<span class="keyword">end</span>
+
+
+
+<span class="comment">% --- Executes on button press in btn_Simulation.</span>
+<span class="keyword">function</span> btn_Simulation_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to btn_Simulation (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Get the angles from the GUI inputs and convert to radians</span>
+Th_1 = str2double(get(handles.Theta_1, <span class="string">'String'</span>)) * pi / 180;
+Th_2 = str2double(get(handles.Theta_2, <span class="string">'String'</span>)) * pi / 180;
+Th_3 = str2double(get(handles.Theta_3, <span class="string">'String'</span>)) * pi / 180;
+
+<span class="comment">% Define link lengths</span>
+L_1 = 20;
+L_2 = 50;
+L_3 = 40;
+
+<span class="comment">% Create the robot links</span>
+L(1) = Link([0 L_1 0 pi/2]);
+L(2) = Link([0 0 L_2 0]);
+L(3) = Link([0 0 L_3 0]);
+
+<span class="comment">% Create the serial link robot</span>
+Robot = SerialLink(L);
+Robot.name = <span class="string">'RRR Robot'</span>;
+
+<span class="comment">% Perform forward kinematics to get the end effector position</span>
+T = Robot.fkine([Th_1, Th_2, Th_3]);
+
+<span class="comment">% Update the position display in the GUI</span>
+set(handles.Pos_X, <span class="string">'String'</span>, num2str(floor(T.t(1))));
+set(handles.Pos_Y, <span class="string">'String'</span>, num2str(floor(T.t(2))));
+set(handles.Pos_Z, <span class="string">'String'</span>, num2str(floor(T.t(3))));
+
+<span class="comment">% Define the initial and final joint configurations</span>
+initialConfig = [0, 0, 0]; <span class="comment">% Change this if needed</span>
+finalConfig = [Th_1, Th_2, Th_3];
+
+<span class="comment">% Number of intermediate steps for the slow-motion effect</span>
+numSteps = 100;
+
+<span class="comment">% Generate intermediate configurations</span>
+interpConfigs = interp1([1, numSteps], [initialConfig; finalConfig], 1:numSteps);
+
+<span class="comment">% Plot the robot configuration in slow motion</span>
+axes(handles.axes1);
+<span class="keyword">for</span> i = 1:numSteps
+    Robot.plot(interpConfigs(i, :), <span class="string">'workspace'</span>, [-100 100 -100 100 -100 100]);
+    pause(0.05); <span class="comment">% Pause to create the slow-motion effect</span>
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="RRR_Manipulator_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function varargout = RRR_Manipulator(varargin)
+% RRR_MANIPULATOR MATLAB code for RRR_Manipulator.fig
+%      RRR_MANIPULATOR, by itself, creates a new RRR_MANIPULATOR or raises the existing
+%      singleton*.
+%
+%      H = RRR_MANIPULATOR returns the handle to a new RRR_MANIPULATOR or the handle to
+%      the existing singleton*.
+%
+%      RRR_MANIPULATOR('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in RRR_MANIPULATOR.M with the given input arguments.
+%
+%      RRR_MANIPULATOR('Property','Value',...) creates a new RRR_MANIPULATOR or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before RRR_Manipulator_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to RRR_Manipulator_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help RRR_Manipulator
+
+% Last Modified by GUIDE v2.5 22-May-2024 10:28:40
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @RRR_Manipulator_OpeningFcn, ...
+                   'gui_OutputFcn',  @RRR_Manipulator_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% REPLACE_WITH_DASH_DASH- Executes just before RRR_Manipulator is made visible.
+function RRR_Manipulator_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to RRR_Manipulator (see VARARGIN)
+
+% Choose default command line output for RRR_Manipulator
+handles.output = hObject;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% UIWAIT makes RRR_Manipulator wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% REPLACE_WITH_DASH_DASH- Outputs from this function are returned to the command line.
+function varargout = RRR_Manipulator_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+
+function Theta_1_Callback(hObject, eventdata, handles)
+% hObject    handle to Theta_1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Theta_1 as text
+%        str2double(get(hObject,'String')) returns contents of Theta_1 as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function Theta_1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Theta_1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function Theta_2_Callback(hObject, eventdata, handles)
+% hObject    handle to Theta_2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Theta_2 as text
+%        str2double(get(hObject,'String')) returns contents of Theta_2 as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function Theta_2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Theta_2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function Theta_3_Callback(hObject, eventdata, handles)
+% hObject    handle to Theta_3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Theta_3 as text
+%        str2double(get(hObject,'String')) returns contents of Theta_3 as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function Theta_3_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Theta_3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+function Pos_X_Callback(hObject, eventdata, handles)
+% hObject    handle to Pos_X (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Pos_X as text
+%        str2double(get(hObject,'String')) returns contents of Pos_X as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function Pos_X_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Pos_X (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function Pos_Y_Callback(hObject, eventdata, handles)
+% hObject    handle to Pos_Y (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Pos_Y as text
+%        str2double(get(hObject,'String')) returns contents of Pos_Y as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function Pos_Y_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Pos_Y (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function Pos_Z_Callback(hObject, eventdata, handles)
+% hObject    handle to Pos_Z (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Pos_Z as text
+%        str2double(get(hObject,'String')) returns contents of Pos_Z as a double
+
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function Pos_Z_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Pos_Z (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function btn_Forward_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_Forward (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get the angles from the GUI inputs and convert to radians
+Th_1 = str2double(get(handles.Theta_1, 'String')) * pi / 180;
+Th_2 = str2double(get(handles.Theta_2, 'String')) * pi / 180;
+Th_3 = str2double(get(handles.Theta_3, 'String')) * pi / 180;
+
+% Define link lengths
+L_1 = 20;
+L_2 = 50;
+L_3 = 40;
+
+% Create the robot links
+L(1) = Link([0 L_1 0 pi/2]);
+L(2) = Link([0 0 L_2 0]);
+L(3) = Link([0 0 L_3 0]);
+
+% Create the serial link robot
+Robot = SerialLink(L);
+Robot.name = 'RRR Robot';
+
+% Perform forward kinematics to get the end effector position
+T = Robot.fkine([Th_1, Th_2, Th_3]);
+
+% Update the position display in the GUI
+set(handles.Pos_X, 'String', num2str(floor(T.t(1))));
+set(handles.Pos_Y, 'String', num2str(floor(T.t(2))));
+set(handles.Pos_Z, 'String', num2str(floor(T.t(3))));
+
+
+
+
+
+    function btn_Inverse_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_Inverse (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+PX = str2double(get(handles.Pos_X, 'String'));
+PY = str2double(get(handles.Pos_Y, 'String'));
+PZ = str2double(get(handles.Pos_Z, 'String'));
+
+% Check if the entered positions are valid numbers
+if isnan(PX) || isnan(PY) || isnan(PZ)
+    errordlg('Invalid position values. Please enter numeric values for X, Y, and Z.', 'Input Error');
+    return;
+end
+
+% Define link lengths
+L_1 = 20;
+L_2 = 50;
+L_3 = 40;
+
+% Create the robot links
+L(1) = Link([0 L_1 0 pi/2]);
+L(2) = Link([0 0 L_2 0]);
+L(3) = Link([0 0 L_3 0]);
+
+% Create the serial link robot
+Robot = SerialLink(L);
+Robot.name = 'RRR Robot';
+
+% Create the transformation matrix for the desired end effector position
+T = transl(PX, PY, PZ);
+
+% Solve for the inverse kinematics with a mask [1 1 1 0 0 0] and a better initial guess
+try
+    % Initial guess for the joint angles
+    initial_guess = [0, 0, 0];
+    J = Robot.ikine(T, 'mask', [1 1 1 0 0 0], 'q0', initial_guess);
+
+    % Convert from radians to degrees
+    J = J * 180 / pi;
+
+    % Update the joint angle displays
+    set(handles.Theta_1, 'String', num2str(floor(J(1))));
+    set(handles.Theta_2, 'String', num2str(floor(J(2))));
+    set(handles.Theta_3, 'String', num2str(floor(J(3))));
+    
+catch ME
+    % Display an error dialog if inverse kinematics fails
+    errordlg(['Inverse kinematics failed: ', ME.message], 'IK Error');
+end
+
+
+
+% REPLACE_WITH_DASH_DASH- Executes on button press in btn_Simulation.
+function btn_Simulation_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_Simulation (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get the angles from the GUI inputs and convert to radians
+Th_1 = str2double(get(handles.Theta_1, 'String')) * pi / 180;
+Th_2 = str2double(get(handles.Theta_2, 'String')) * pi / 180;
+Th_3 = str2double(get(handles.Theta_3, 'String')) * pi / 180;
+
+% Define link lengths
+L_1 = 20;
+L_2 = 50;
+L_3 = 40;
+
+% Create the robot links
+L(1) = Link([0 L_1 0 pi/2]);
+L(2) = Link([0 0 L_2 0]);
+L(3) = Link([0 0 L_3 0]);
+
+% Create the serial link robot
+Robot = SerialLink(L);
+Robot.name = 'RRR Robot';
+
+% Perform forward kinematics to get the end effector position
+T = Robot.fkine([Th_1, Th_2, Th_3]);
+
+% Update the position display in the GUI
+set(handles.Pos_X, 'String', num2str(floor(T.t(1))));
+set(handles.Pos_Y, 'String', num2str(floor(T.t(2))));
+set(handles.Pos_Z, 'String', num2str(floor(T.t(3))));
+
+% Define the initial and final joint configurations
+initialConfig = [0, 0, 0]; % Change this if needed
+finalConfig = [Th_1, Th_2, Th_3];
+
+% Number of intermediate steps for the slow-motion effect
+numSteps = 100;
+
+% Generate intermediate configurations
+interpConfigs = interp1([1, numSteps], [initialConfig; finalConfig], 1:numSteps);
+
+% Plot the robot configuration in slow motion
+axes(handles.axes1);
+for i = 1:numSteps
+    Robot.plot(interpConfigs(i, :), 'workspace', [-100 100 -100 100 -100 100]);
+    pause(0.05); % Pause to create the slow-motion effect
+end
+
+##### SOURCE END #####
+--></body></html>
